@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Recuperação - MBA IA & Big Data</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-bg:     #1a5276;
+    --blue-mid:    #2471a3;
+    --blue-light:  #3498db;
+    --yellow:      #d4ac0d;
+    --yellow-light:#f1c40f;
+    --white:       #ffffff;
+    --off-white:   #f4f8fb;
+    --text-dark:   #1a2a3a;
+    --text-muted:  #5d7a8a;
+    --red:         #c0392b;
+    --darkred:       #990000;
+    --border-blue:   rgba(36,113,163,0.22);
+    --border-yellow: rgba(212,172,13,0.38);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--off-white); color:var(--text-dark); line-height:1.7;  font-size: 22px;}
+
+  /* HERO */
+  .hero { background:var(--blue-bg); padding:64px 32px 52px; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-80px; left:-80px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(212,172,13,.16) 0%,transparent 70%); pointer-events:none; }
+  .hero::after  { content:''; position:absolute; bottom:-90px; right:-60px; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle,rgba(36,113,163,.22) 0%,transparent 70%); pointer-events:none; }
+  .badge { display:inline-block; background:var(--red); color:#fff; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; letter-spacing:2px; text-transform:uppercase; padding:5px 16px; border-radius:2px; margin-bottom:20px; }
+  .hero h1 { font-family:'DM Serif Display',serif; font-size:clamp(1.9rem,4.5vw,3.4rem); color:var(--white); line-height:1.15; margin-bottom:10px; }
+  .hero h1 em { color:var(--yellow-light); font-style:italic; }
+  .hero-sub { font-family:'JetBrains Mono',monospace; font-size:16px; color:var(--yellow); letter-spacing:1.5px; margin-bottom:22px; }
+  .hero-desc { max-width:620px; margin:0 auto; color:rgba(255,255,255,.7); font-size:17px; font-weight:300; line-height:1.85; }
+
+  /* ALERT */
+  .alert { background:var(--darkred); padding:15px 32px; display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .alert p { color:#fff; font-size:16px; font-weight:500; text-align:center; }
+  .alert strong { font-weight:700; }
+
+  /* CONTAINER */
+  .container { max-width:880px; margin:0 auto; padding:52px 24px; }
+
+  .section-label { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:var(--blue-mid); margin-bottom:5px; }
+  h2 { font-family:'DM Serif Display',serif; font-size:1.8rem; color:var(--blue-bg); margin-bottom:18px; line-height:1.2; }
+  hr.divider { border:none; border-top:1.5px solid var(--border-blue); margin:0 0 48px; }
+
+  /* INTRO */
+  .intro-box { background:var(--blue-bg); border-left:4px solid var(--yellow); padding:28px 32px; border-radius:4px; margin-bottom:48px; }
+  .intro-box p { color:rgba(255,255,255,.82); font-size:16px; line-height:1.9; margin-bottom:12px; }
+  .intro-box p:last-child { margin-bottom:0; }
+  .intro-box strong { color:var(--yellow-light); font-weight:600; }
+
+  /* HOW IT WORKS */
+  .how-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:48px; }
+  @media(max-width:560px){ .how-grid{grid-template-columns:1fr;} }
+  .how-card { border-radius:6px; padding:22px 22px; }
+  .how-card.phase-a { background:var(--blue-bg); border:2px solid var(--blue-mid); }
+  .how-card.phase-b { background:var(--blue-bg); border:2px solid var(--yellow); }
+  .how-card .phase-num { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:2px; font-weight:600; text-transform:uppercase; margin-bottom:8px; }
+  .how-card.phase-a .phase-num { color:var(--blue-light); }
+  .how-card.phase-b .phase-num { color:var(--yellow); }
+  .how-card h3 { font-size:.95rem; font-weight:700; margin-bottom:8px; color:var(--white); }
+  .how-card p { font-size:14px; color:rgba(255,255,255,.72); line-height:1.7; }
+  .duration-badge { display:inline-block; margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; padding:3px 11px; border-radius:20px; background:rgba(212,172,13,.18); color:var(--yellow-light); border:1px solid var(--border-yellow); }
+
+  /* COURSE CARDS */
+  .courses-section { margin-bottom:48px; }
+  .course-card { border-radius:8px; margin-bottom:16px; overflow:hidden; border:1.5px solid var(--border-blue); box-shadow:0 2px 10px rgba(26,82,118,.07); }
+  .course-header { background:var(--blue-bg); padding:16px 22px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .course-num { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:var(--yellow); letter-spacing:1.5px; text-transform:uppercase; white-space:nowrap; }
+  .course-title { font-family:'DM Serif Display',serif; font-size:1.05rem; color:var(--white); flex:1; }
+  .course-hours { font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--yellow-light); background:rgba(212,172,13,.18); border:1px solid var(--border-yellow); padding:2px 10px; border-radius:20px; white-space:nowrap; }
+
+  .course-body { padding:18px 22px; background:var(--white); display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media(max-width:560px){ .course-body{grid-template-columns:1fr;} }
+
+  .phase-block { border-radius:6px; padding:16px 18px; }
+  .phase-block.content { background:#eaf2fb; border:1.5px solid #aed6f1; }
+  .phase-block.eval    { background:#fefde7; border:1.5px solid #f4d03f; }
+
+  .pb-label { font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; }
+  .phase-block.content .pb-label { color:var(--blue-mid); }
+  .phase-block.eval    .pb-label { color:#7d6608; }
+  .pb-title { font-size:14px; font-weight:700; color:var(--text-dark); margin-bottom:10px; }
+
+  .date-range { display:flex; flex-direction:column; gap:5px; }
+  .dr-row { display:flex; align-items:center; gap:8px; font-size:14px; }
+  .dr-tag { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap; flex-shrink:0; }
+  .phase-block.content .dr-tag { background:var(--blue-mid); color:#fff; }
+  .phase-block.eval    .dr-tag { background:var(--yellow); color:var(--text-dark); }
+  .dr-end .dr-tag { background:var(--red) !important; color:#fff !important; }
+  .dr-row span { color:#444; line-height:1.35; }
+
+  /* RULES */
+  .rules-section { background:var(--blue-bg); border-radius:8px; padding:36px; margin-bottom:48px; }
+  .rules-section .section-label { color:var(--yellow); }
+  .rules-section h2 { color:var(--white); margin-bottom:20px; }
+  .rules-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; }
+  .rule-item { background:rgba(255,255,255,.07); border:1px solid rgba(212,172,13,.22); border-radius:6px; padding:16px 18px; }
+  .rule-icon { font-size:20px; margin-bottom:7px; display:block; }
+  .rule-item p { color:rgba(255,255,255,.78); font-size:15px; line-height:1.65; }
+  .rule-item strong { color:var(--yellow-light); font-weight:600; }
+
+  /* FULL TABLE */
+  .calendar-section { margin-bottom:48px; }
+  .cal-table { width:100%; border-collapse:collapse; font-size:14px; border-radius:8px; overflow:hidden; box-shadow:0 2px 14px rgba(26,82,118,.09); }
+  .cal-table thead tr { background:var(--blue-bg); }
+  .cal-table thead th { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--yellow); padding:12px 14px; text-align:left; border-bottom:2px solid var(--yellow); }
+  .cal-table tbody tr:nth-child(even) { background:#f0f6fc; }
+  .cal-table tbody tr:nth-child(odd)  { background:var(--white); }
+  .cal-table td { padding:9px 14px; border-bottom:1px solid #ddeaf5; vertical-align:middle; color:var(--text-dark); }
+  .cal-table td.date-col { font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--blue-mid); white-space:nowrap; font-weight:600; }
+  .tag-content { display:inline-block; background:#d6eaf8; color:var(--blue-bg); font-weight:600; font-size:13px; padding:2px 9px; border-radius:12px; white-space:nowrap; }
+  .tag-eval    { display:inline-block; background:#fef9c3; color:#7d6608; font-weight:600; font-size:13px; padding:2px 9px; border-radius:12px; border:1px solid #f4d03f; white-space:nowrap; }
+  .tag-deadline{ display:inline-block; background:var(--red); color:#fff; font-weight:700; font-size:13px; padding:2px 9px; border-radius:12px; white-space:nowrap; }
+  .cal-table .course-row-header td { background:var(--blue-mid); color:var(--white); font-weight:700; font-size:12.5px; padding:9px 14px; border-bottom:none; }
+  .cal-table .course-row-header td span { color:var(--yellow-light); font-family:'JetBrains Mono',monospace; font-size:13px; margin-left:7px; font-weight:600; }
+  .row-holiday td { background:#fef3f2 !important; }
+  .row-holiday .date-col { color:var(--red) !important; }
+  .row-holiday td:last-child { color:var(--red); font-style:italic; }
+
+  /* CLOSING */
+  .closing { text-align:center; padding:52px 24px; background:var(--blue-bg); border-radius:8px; }
+  .closing h2 { font-family:'DM Serif Display',serif; font-size:1.9rem; color:var(--white); margin-bottom:12px; }
+  .closing h2 em { color:var(--yellow-light); font-style:italic; }
+  .closing p { color:rgba(255,255,255,.70); font-size:16px; max-width:520px; margin:0 auto 12px; line-height:1.85; }
+  .closing-tag { display:inline-block; margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:15px; color:var(--yellow); border:1px solid var(--yellow); padding:7px 20px; border-radius:2px; letter-spacing:1px; }
+
+  footer { text-align:center; padding:20px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-muted); letter-spacing:1px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">⚠ Última Oportunidade</div>
+  <h1>Plano de <em>Recuperação</em><br>Módulo de Fundamentação</h1>
+  <p class="hero-sub">MBA em Inteligência Artificial & Big Data - Cursos C1 a C6</p>
+  <p class="hero-desc">Uma última janela estruturada para os alunos com pendências no módulo de fundamentação regularizarem sua situação acadêmica antes do encerramento do programa.</p>
+</div>
+
+<!-- ALERT -->
+<div class="alert">
+  <span>🚨</span>
+  <p><strong>Atenção:</strong> O MBA está em andamento no Módulo Avançado e na fase de TCC (Metodologias). <strong>Esta é a última chance de recuperação do Módulo de Fundamentação.</strong></p>
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="intro-box">
+    <p>Prezado(a) aluno(a),</p>
+    <p>A supervisão acadêmica, junto à coordenação do curso, elaborou este <strong>Plano de Recuperação do Módulo de Fundamentação</strong> para oferecer uma última oportunidade estruturada de regularização das pendências nos Cursos 1 a 6. O MBA já em plena execução do <strong>Módulo Avançado</strong>, e com o andamento das entregas parciais referentes à monografia do <strong>TCC</strong> nos cursos de <strong>Metodologia</strong>.</p>
+    <p>Nesse plano, cada curso terá <strong>12 dias úteis</strong> de recuperação: os primeiros 8 para revisão do conteúdo, e os últimos 4 com as atividades avaliativas abertas - todas de uma vez, cabendo a você organizar sua entrega dentro da janela. Dúvidas sobre o conteúdo? Use o <strong>fórum do curso correspondente</strong> na plataforma. <strong>Início: 30 de março de 2025.</strong></p>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <p class="section-label">Como funciona</p>
+  <h2>Estrutura por Curso</h2>
+  <div class="how-grid">
+    <div class="how-card phase-a">
+      <p class="phase-num">Fase 1 - Dias 1 a 8</p>
+      <h3>📘 Recuperação de Conteúdo</h3>
+      <p>Oito dias úteis dedicados ao resgate do conteúdo. Assista às aulas gravadas, revise os materiais e, se tiver dúvidas, poste no fórum do curso na plataforma. Nenhuma avaliação está aberta neste período.</p>
+      <span class="duration-badge">8 dias úteis</span>
+    </div>
+    <div class="how-card phase-b">
+      <p class="phase-num">Fase 2 - Dias 9 a 12</p>
+      <h3>📝 Recuperação Avaliativa</h3>
+      <p>Nos últimos 4 dias úteis, <strong>todas</strong> as atividades avaliativas do curso são abertas simultaneamente. Organize-se para entregar tudo dentro dessa janela. Após o prazo, as atividades são encerradas sem prorrogação.</p>
+      <span class="duration-badge">4 dias úteis</span>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- COURSES -->
+  <div class="courses-section">
+    <p class="section-label">Datas por curso</p>
+    <h2>Os 6 Cursos - Janelas de Recuperação</h2>
+
+    <!-- C1 -->
+    <div class="course-card">
+      <div class="course-header">
+        <span class="course-num">Curso 1</span>
+        <span class="course-title">Linguagens e Ferramentas/Frameworks (Python e SQL)</span>
+        <span class="course-hours">30hs</span>
+      </div>
+      <div class="course-body">
+        <div class="phase-block content">
+          <p class="pb-label">📘 Recuperação de Conteúdo</p>
+          <p class="pb-title">30/03 – 09/04 &nbsp;(8 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">30/03 Seg</span><span>Início - acesso ao conteúdo</span></div>
+            <div class="dr-row"><span class="dr-tag">31/03 Ter</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">01/04 Qua</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">02/04 Qui</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">03/04 Sex</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">07/04 Seg</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">08/04 Ter</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">09/04 Qua</span><span>Encerramento da fase de conteúdo</span></div>
+          </div>
+        </div>
+        <div class="phase-block eval">
+          <p class="pb-label">📝 Recuperação Avaliativa</p>
+          <p class="pb-title">10/04 – 15/04 &nbsp;(4 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">10/04 Qui</span><span>Abertura de todas as avaliações</span></div>
+            <div class="dr-row"><span class="dr-tag">11/04 Sex</span><span>Período de avaliação</span></div>
+            <div class="dr-row"><span class="dr-tag">14/04 Seg</span><span>Período de avaliação</span></div>
+            <div class="dr-row dr-end"><span class="dr-tag">15/04 Ter</span><span>⛔ Encerramento definitivo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C2 -->
+    <div class="course-card">
+      <div class="course-header">
+        <span class="course-num">Curso 2</span>
+        <span class="course-title">Ciência de Dados, Aprendizado de Máquina e Mineração de Dados</span>
+        <span class="course-hours">40hs</span>
+      </div>
+      <div class="course-body">
+        <div class="phase-block content">
+          <p class="pb-label">📘 Recuperação de Conteúdo</p>
+          <p class="pb-title">16/04 – 29/04 &nbsp;(8 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">16/04 Qua</span><span>Início - acesso ao conteúdo</span></div>
+            <div class="dr-row"><span class="dr-tag">17/04 Qui</span><span>Revisão</span></div>
+            <div class="dr-row" style="opacity:.5"><span class="dr-tag" style="background:#c0392b;color:#fff">18/04 Sex</span><span style="color:#c0392b;font-style:italic">Sexta-feira Santa - feriado</span></div>
+            <div class="dr-row"><span class="dr-tag">22/04 Ter</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">23/04 Qua</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">24/04 Qui</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">25/04 Sex</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">28/04 Seg</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">29/04 Ter</span><span>Encerramento da fase de conteúdo</span></div>
+          </div>
+        </div>
+        <div class="phase-block eval">
+          <p class="pb-label">📝 Recuperação Avaliativa</p>
+          <p class="pb-title">30/04 – 05/05 &nbsp;(4 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">30/04 Qua</span><span>Abertura de todas as avaliações</span></div>
+            <div class="dr-row" style="opacity:.5"><span class="dr-tag" style="background:#c0392b;color:#fff">01/05 Qui</span><span style="color:#c0392b;font-style:italic">Dia do Trabalho - feriado</span></div>
+            <div class="dr-row"><span class="dr-tag">02/05 Sex</span><span>Período de avaliação</span></div>
+            <div class="dr-row"><span class="dr-tag">05/05 Seg</span><span>Período de avaliação</span></div>
+            <div class="dr-row dr-end"><span class="dr-tag">06/05 Ter</span><span>⛔ Encerramento definitivo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C3 -->
+    <div class="course-card">
+      <div class="course-header">
+        <span class="course-num">Curso 3</span>
+        <span class="course-title">Gerenciamento e Processamento Paralelo de Dados em Larga Escala</span>
+        <span class="course-hours">40hs</span>
+      </div>
+      <div class="course-body">
+        <div class="phase-block content">
+          <p class="pb-label">📘 Recuperação de Conteúdo</p>
+          <p class="pb-title">07/05 – 16/05 &nbsp;(8 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">07/05 Qua</span><span>Início - acesso ao conteúdo</span></div>
+            <div class="dr-row"><span class="dr-tag">08/05 Qui</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">09/05 Sex</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">12/05 Seg</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">13/05 Ter</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">14/05 Qua</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">15/05 Qui</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">16/05 Sex</span><span>Encerramento da fase de conteúdo</span></div>
+          </div>
+        </div>
+        <div class="phase-block eval">
+          <p class="pb-label">📝 Recuperação Avaliativa</p>
+          <p class="pb-title">19/05 – 22/05 &nbsp;(4 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">19/05 Seg</span><span>Abertura de todas as avaliações</span></div>
+            <div class="dr-row"><span class="dr-tag">20/05 Ter</span><span>Período de avaliação</span></div>
+            <div class="dr-row"><span class="dr-tag">21/05 Qua</span><span>Período de avaliação</span></div>
+            <div class="dr-row dr-end"><span class="dr-tag">22/05 Qui</span><span>⛔ Encerramento definitivo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C4 -->
+    <div class="course-card">
+      <div class="course-header">
+        <span class="course-num">Curso 4</span>
+        <span class="course-title">Estatística na Ciência da Computação Experimental</span>
+        <span class="course-hours">30hs</span>
+      </div>
+      <div class="course-body">
+        <div class="phase-block content">
+          <p class="pb-label">📘 Recuperação de Conteúdo</p>
+          <p class="pb-title">23/05 – 03/06 &nbsp;(8 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">23/05 Sex</span><span>Início - acesso ao conteúdo</span></div>
+            <div class="dr-row"><span class="dr-tag">26/05 Seg</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">27/05 Ter</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">28/05 Qua</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">29/05 Qui</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">30/05 Sex</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">02/06 Seg</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">03/06 Ter</span><span>Encerramento da fase de conteúdo</span></div>
+          </div>
+        </div>
+        <div class="phase-block eval">
+          <p class="pb-label">📝 Recuperação Avaliativa</p>
+          <p class="pb-title">04/06 – 09/06 &nbsp;(4 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">04/06 Qua</span><span>Abertura de todas as avaliações</span></div>
+            <div class="dr-row"><span class="dr-tag">05/06 Qui</span><span>Período de avaliação</span></div>
+            <div class="dr-row"><span class="dr-tag">06/06 Sex</span><span>Período de avaliação</span></div>
+            <div class="dr-row dr-end"><span class="dr-tag">09/06 Seg</span><span>⛔ Encerramento definitivo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C5 -->
+    <div class="course-card">
+      <div class="course-header">
+        <span class="course-num">Curso 5</span>
+        <span class="course-title">Redes Neurais e Deep Learning</span>
+        <span class="course-hours">30hs</span>
+      </div>
+      <div class="course-body">
+        <div class="phase-block content">
+          <p class="pb-label">📘 Recuperação de Conteúdo</p>
+          <p class="pb-title">10/06 – 18/06 &nbsp;(8 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">10/06 Ter</span><span>Início - acesso ao conteúdo</span></div>
+            <div class="dr-row"><span class="dr-tag">11/06 Qua</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">12/06 Qui</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">13/06 Sex</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">16/06 Seg</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">17/06 Ter</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">18/06 Qua</span><span>Revisão</span></div>
+            <div class="dr-row" style="opacity:.5"><span class="dr-tag" style="background:#c0392b;color:#fff">19/06 Qui</span><span style="color:#c0392b;font-style:italic">Corpus Christi - feriado</span></div>
+            <div class="dr-row"><span class="dr-tag">20/06 Sex</span><span>Encerramento da fase de conteúdo</span></div>
+          </div>
+        </div>
+        <div class="phase-block eval">
+          <p class="pb-label">📝 Recuperação Avaliativa</p>
+          <p class="pb-title">23/06 – 26/06 &nbsp;(4 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">23/06 Seg</span><span>Abertura de todas as avaliações</span></div>
+            <div class="dr-row"><span class="dr-tag">24/06 Ter</span><span>Período de avaliação</span></div>
+            <div class="dr-row"><span class="dr-tag">25/06 Qua</span><span>Período de avaliação</span></div>
+            <div class="dr-row dr-end"><span class="dr-tag">26/06 Qui</span><span>⛔ Encerramento definitivo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C6 -->
+    <div class="course-card">
+      <div class="course-header">
+        <span class="course-num">Curso 6</span>
+        <span class="course-title">Gestão de Dados e Governança de Dados</span>
+        <span class="course-hours">40hs</span>
+      </div>
+      <div class="course-body">
+        <div class="phase-block content">
+          <p class="pb-label">📘 Recuperação de Conteúdo</p>
+          <p class="pb-title">27/06 – 08/07 &nbsp;(8 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">27/06 Sex</span><span>Início - acesso ao conteúdo</span></div>
+            <div class="dr-row"><span class="dr-tag">30/06 Seg</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">01/07 Ter</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">02/07 Qua</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">03/07 Qui</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">04/07 Sex</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">07/07 Seg</span><span>Revisão</span></div>
+            <div class="dr-row"><span class="dr-tag">08/07 Ter</span><span>Encerramento da fase de conteúdo</span></div>
+          </div>
+        </div>
+        <div class="phase-block eval">
+          <p class="pb-label">📝 Recuperação Avaliativa</p>
+          <p class="pb-title">09/07 – 14/07 &nbsp;(4 dias úteis)</p>
+          <div class="date-range">
+            <div class="dr-row"><span class="dr-tag">09/07 Qua</span><span>Abertura de todas as avaliações</span></div>
+            <div class="dr-row"><span class="dr-tag">10/07 Qui</span><span>Período de avaliação</span></div>
+            <div class="dr-row"><span class="dr-tag">11/07 Sex</span><span>Período de avaliação</span></div>
+            <div class="dr-row dr-end"><span class="dr-tag">14/07 Seg</span><span>⛔ Encerramento definitivo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /courses -->
+  <hr class="divider">
+
+  <!-- RULES -->
+  <div class="rules-section">
+    <p class="section-label">Regras e orientações</p>
+    <h2>O que você precisa saber</h2>
+    <div class="rules-grid">
+      <div class="rule-item">
+        <span class="rule-icon">⏳</span>
+        <p><strong>Sem prorrogações.</strong> Os prazos são fixos. Após o encerramento da fase avaliativa de cada curso, as atividades são fechadas definitivamente.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-icon">📚</span>
+        <p><strong>Conteúdo disponível.</strong> As aulas gravadas e materiais dos Cursos 1 a 6 permanecem acessíveis, como usual.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-icon">💬</span>
+        <p><strong>Dúvidas no fórum.</strong> Utilize o fórum do curso correspondente na plataforma para tirar dúvidas durante a fase de conteúdo.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-icon">📋</span>
+        <p><strong>Avaliações simultâneas.</strong> Na fase avaliativa, todas as atividades do curso ficam abertas ao mesmo tempo. Organize seu tempo nos 4 dias disponíveis.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-icon">📅</span>
+        <p><strong>O MBA não para.</strong> Os cursos do Módulo Avançado e entregas das Metodologias (referentes ao TCC) continuam em andamento.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-icon">🏁</span>
+        <p><strong>Última oportunidade.</strong> Não haverá nova janela de recuperação após o encerramento do Curso 6 em <strong>14 de julho de 2025</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL CALENDAR TABLE -->
+  <div class="calendar-section">
+    <p class="section-label">Visão consolidada</p>
+    <h2>Cronograma Completo - Março a Julho de 2025</h2>
+    <table class="cal-table">
+      <thead>
+        <tr>
+          <th style="width:120px">Data</th>
+          <th style="width:100px">Tipo</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- C1 -->
+        <tr class="course-row-header"><td colspan="3">Curso 1 - Linguagens e Ferramentas/Frameworks (Python e SQL) <span>30hs</span></td></tr>
+        <tr><td class="date-col">30/03 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Início - acesso liberado ao Curso 1</td></tr>
+        <tr><td class="date-col">31/03 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">01/04 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">02/04 · Qui</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">03/04 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">07/04 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">08/04 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">09/04 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Encerramento da fase de conteúdo</td></tr>
+        <tr><td class="date-col">10/04 · Qui</td><td><span class="tag-eval">Avaliação</span></td><td>Abertura de todas as avaliações do Curso 1</td></tr>
+        <tr><td class="date-col">11/04 · Sex</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">14/04 · Seg</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">15/04 · Ter</td><td><span class="tag-deadline">⛔ Prazo Final</span></td><td>Encerramento definitivo - Curso 1</td></tr>
+
+        <!-- C2 -->
+        <tr class="course-row-header"><td colspan="3">Curso 2 - Ciência de Dados, Aprendizado de Máquina e Mineração de Dados <span>40hs</span></td></tr>
+        <tr><td class="date-col">16/04 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Início - acesso liberado ao Curso 2</td></tr>
+        <tr><td class="date-col">17/04 · Qui</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr class="row-holiday"><td class="date-col">18/04 · Sex</td><td>-</td><td>Sexta-feira Santa - feriado nacional</td></tr>
+        <tr><td class="date-col">22/04 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">23/04 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">24/04 · Qui</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">25/04 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">28/04 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">29/04 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Encerramento da fase de conteúdo</td></tr>
+        <tr><td class="date-col">30/04 · Qua</td><td><span class="tag-eval">Avaliação</span></td><td>Abertura de todas as avaliações do Curso 2</td></tr>
+        <tr class="row-holiday"><td class="date-col">01/05 · Qui</td><td>-</td><td>Dia do Trabalho - feriado nacional</td></tr>
+        <tr><td class="date-col">02/05 · Sex</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">05/05 · Seg</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">06/05 · Ter</td><td><span class="tag-deadline">⛔ Prazo Final</span></td><td>Encerramento definitivo - Curso 2</td></tr>
+
+        <!-- C3 -->
+        <tr class="course-row-header"><td colspan="3">Curso 3 - Gerenciamento e Processamento Paralelo de Dados em Larga Escala <span>40hs</span></td></tr>
+        <tr><td class="date-col">07/05 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Início - acesso liberado ao Curso 3</td></tr>
+        <tr><td class="date-col">08/05 · Qui</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">09/05 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">12/05 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">13/05 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">14/05 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">15/05 · Qui</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">16/05 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Encerramento da fase de conteúdo</td></tr>
+        <tr><td class="date-col">19/05 · Seg</td><td><span class="tag-eval">Avaliação</span></td><td>Abertura de todas as avaliações do Curso 3</td></tr>
+        <tr><td class="date-col">20/05 · Ter</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">21/05 · Qua</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">22/05 · Qui</td><td><span class="tag-deadline">⛔ Prazo Final</span></td><td>Encerramento definitivo - Curso 3</td></tr>
+
+        <!-- C4 -->
+        <tr class="course-row-header"><td colspan="3">Curso 4 - Estatística na Ciência da Computação Experimental <span>30hs</span></td></tr>
+        <tr><td class="date-col">23/05 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Início - acesso liberado ao Curso 4</td></tr>
+        <tr><td class="date-col">26/05 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">27/05 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">28/05 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">29/05 · Qui</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">30/05 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">02/06 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">03/06 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Encerramento da fase de conteúdo</td></tr>
+        <tr><td class="date-col">04/06 · Qua</td><td><span class="tag-eval">Avaliação</span></td><td>Abertura de todas as avaliações do Curso 4</td></tr>
+        <tr><td class="date-col">05/06 · Qui</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">06/06 · Sex</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">09/06 · Seg</td><td><span class="tag-deadline">⛔ Prazo Final</span></td><td>Encerramento definitivo - Curso 4</td></tr>
+
+        <!-- C5 -->
+        <tr class="course-row-header"><td colspan="3">Curso 5 - Redes Neurais e Deep Learning <span>30hs</span></td></tr>
+        <tr><td class="date-col">10/06 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Início - acesso liberado ao Curso 5</td></tr>
+        <tr><td class="date-col">11/06 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">12/06 · Qui</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">13/06 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">16/06 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">17/06 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">18/06 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr class="row-holiday"><td class="date-col">19/06 · Qui</td><td>-</td><td>Corpus Christi - feriado nacional</td></tr>
+        <tr><td class="date-col">20/06 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Encerramento da fase de conteúdo</td></tr>
+        <tr><td class="date-col">23/06 · Seg</td><td><span class="tag-eval">Avaliação</span></td><td>Abertura de todas as avaliações do Curso 5</td></tr>
+        <tr><td class="date-col">24/06 · Ter</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">25/06 · Qua</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">26/06 · Qui</td><td><span class="tag-deadline">⛔ Prazo Final</span></td><td>Encerramento definitivo - Curso 5</td></tr>
+
+        <!-- C6 -->
+        <tr class="course-row-header"><td colspan="3">Curso 6 - Gestão de Dados e Governança de Dados <span>40hs</span></td></tr>
+        <tr><td class="date-col">27/06 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Início - acesso liberado ao Curso 6</td></tr>
+        <tr><td class="date-col">30/06 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">01/07 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">02/07 · Qua</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">03/07 · Qui</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">04/07 · Sex</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">07/07 · Seg</td><td><span class="tag-content">Conteúdo</span></td><td>Revisão</td></tr>
+        <tr><td class="date-col">08/07 · Ter</td><td><span class="tag-content">Conteúdo</span></td><td>Encerramento da fase de conteúdo</td></tr>
+        <tr><td class="date-col">09/07 · Qua</td><td><span class="tag-eval">Avaliação</span></td><td>Abertura de todas as avaliações do Curso 6</td></tr>
+        <tr><td class="date-col">10/07 · Qui</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">11/07 · Sex</td><td><span class="tag-eval">Avaliação</span></td><td>Período de avaliação</td></tr>
+        <tr><td class="date-col">14/07 · Seg</td><td><span class="tag-deadline">⛔ Prazo Final</span></td><td>⛔ ENCERRAMENTO DEFINITIVO DO PLANO DE RECUPERAÇÃO</td></tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <h2>Acredite na sua <em>capacidade</em> de recuperação.</h2>
+    <p>Este plano foi criado porque acreditamos em você. Organize sua agenda, comprometa-se com os prazos e use cada dia disponível da melhor forma possível.</p>
+    <p>O MBA é um compromisso com seu futuro profissional - e você já chegou longe demais para desistir agora.</p>
+    <span class="closing-tag">MBA IA & Big Data - Supervisão e Coordenação Acadêmica</span>
+  </div>
+
+</div>
+
+<footer>
+  MBA em Inteligência Artificial & Big Data &nbsp;·&nbsp; Plano de Recuperação - Módulo de Fundamentação &nbsp;·&nbsp; Cursos C1–C6 &nbsp;·&nbsp; Mar–Jul 2025
+</footer>
+
+</body>
+</html>
